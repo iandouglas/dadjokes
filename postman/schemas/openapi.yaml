@@ -1,0 +1,47 @@
+openapi: 3.0.0
+info:
+  version: '0.1'
+  title: 'Jokes'
+  license:
+    name: MIT
+servers:
+  - url: 'http://localhost:5000'
+paths:
+  /hello:
+    get:
+      summary: 'Simple hello world greeting'
+      operationId: getGreeting
+      responses:
+        '200':
+          description: 'simple greeting as a response'
+          content:
+            application/json:
+              schema:
+                $ref: '#components/schemas/Greeting'
+  /:
+    get:
+      summary: 'fetch a single joke'
+      operationId: getJoke
+      responses:
+        '200':
+          description: 'a single joke is returned'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Joke'
+components:
+  schemas:
+    Joke:
+      type: object
+      required:
+        - joke
+      properties:
+        joke:
+          type: string
+    Greeting:
+      type: object
+      required:
+        - hello
+      properties:
+        hello:
+          type: string
