@@ -9,7 +9,7 @@ with open('jokes.json', 'r') as joke_data:
 app = Flask(__name__)
 
     
-@app.route("/")
+@app.route("/api/v1/joke")
 def get_joke():
   jokes_index = random.randint(0,len(jokes)-1)
   random_joke = jokes[jokes_index]

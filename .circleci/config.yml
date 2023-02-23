@@ -1,18 +1,26 @@
 version: 2.1
-orbs:
-  python: circleci/python@2.0.3
+
 jobs:
-  build-and-test:
+  automated-api-tests:
     docker:
-      - image: cimg/python:3.10.4
+      - image: cimg/base:2021.04
     steps:
       - checkout
-      - python/install-packages:
-          pkg-manager: pip
       - run:
-          name: Run tests
-          command: python -m pytest
+          name: Install Postman CLI
+          command: |
+            curl -o- "https://dl-cli.pstmn.io/install/linux64.sh" | sh
+      - run:
+          name: Login using your API key
+          command: postman login --with-api-key $POSTMAN_API_KEY
+      - run: |
+            postman collection run "19408657-8af67c24-abc9-487e-ac81-9e658bf036c5" --integration-id "134288-${CIRCLE_WORKFLOW_JOB_ID}"
+      - run:
+          name: Lint your API using Postman CLI
+          command: postman api lint --integration-id 134288
+
 workflows:
-  sample:
+  version: 2
+  automated-api-tests:
     jobs:
-      - build-and-test
+      - automated-api-tests
