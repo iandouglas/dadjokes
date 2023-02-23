@@ -17,8 +17,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#components/schemas/Greeting'
-  /:
+                $ref: '#components/schemas/GreetingObject'
+  /api/v1/joke:
     get:
       summary: 'fetch a single joke'
       operationId: getJoke
@@ -28,20 +28,45 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Joke'
+                $ref: '#/components/schemas/JokeObject'
+        '500':
+          description: 'something bad happened'
+          content:
+            application/json:
+              schema:
+                $ref: '#components/schemas/ErrorObject'
 components:
   schemas:
-    Joke:
-      type: object
-      required:
-        - joke
-      properties:
-        joke:
-          type: string
     Greeting:
       type: object
-      required:
-        - hello
       properties:
         hello:
           type: string
+    GreetingObject:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/Greeting'
+    Joke:
+      type: object
+      properties:
+        joke:
+          type: string
+    JokeObject:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/Joke'
+    Error:
+      type: object
+      required:
+        - message
+      properties:
+        message:
+          description: A human readable error message
+          type: string
+    Errorbject:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/Error'
