@@ -13,13 +13,13 @@ app = Flask(__name__)
 def get_joke():
   jokes_index = random.randint(0,len(jokes)-1)
   random_joke = jokes[jokes_index]
-  return jsonify({'joke': random_joke})
+  return jsonify({'data': {'joke': random_joke}})
 
     
 # get and jsonify the data
 @app.route("/hello")
 def get_greeting():
-    return jsonify({'hello': 'world'})
+    return jsonify({'data': {'hello': 'world'}})
 
 
 if __name__ == "__main__":
